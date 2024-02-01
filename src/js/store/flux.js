@@ -1,3 +1,5 @@
+import { array } from "prop-types";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -12,9 +14,84 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			contact:[],
+			stage:{
+						full_name: "",
+						email: "",
+						address: "",
+						phone: "",
+					}
 		},
 		actions: {
+			createContact: async (name,email,address,phone) => {
+				const response = await fetch ("https://playground.4geeks.com/apis/fake/contact/",{
+					method: "POST",
+					headers: {"Content-Type": "application/json"},
+					body: JSON.stringify(
+					{
+						full_name: name,
+						email: email,
+						agenda_slug: "Anxie-tea",
+						address: address,
+						phone: phone,
+					})
+				})
+				const data = await response.json()
+				setStore((prevState) => {
+					const updatedContact = [
+						...prevState.contact,
+						{
+							full_name: name,
+							email: email,
+							agenda_slug: "Anxie-tea",
+							address: address,
+							phone: phone,
+						},
+					];
+					return { contact: updatedContact};
+				});
+			},
+			getContact: async () => {
+				const store = getStore()
+				const response = await fetch ("https://playground.4geeks.com/apis/fake/contact/agenda/Anxie-tea")
+				const data = await response.json()
+				console.log(data,"this is getContact data");
+				setStore({contact: data})
+				console.log(store.contact,"this is store data")
+			},
+			manageForm: (name,email, phone, address,id) => {
+					setStore({
+						stage: {
+						full_name: "",
+						email: "",
+						address: "",
+						phone: "",
+					}});
+			},
+
+			updateContact: async (name,email,address,phone,id) => {
+				const response = await fetch (`https://playground.4geeks.com/apis/fake/contact/${id}`, {
+					method: "PUT",
+					headers: {"Content-Type": "application/json"},
+					body: JSON.stringify(
+					{
+						full_name: name,
+						email: email,
+						agenda_slug: "Anxie-tea",
+						address: address,
+						phone: phone,
+					})
+				})
+				const data = await response.json()
+			},
+			deleteContact: async (id) => {
+				const response = await fetch (`https://playground.4geeks.com/apis/fake/contact/${id}`, {
+					method: "DELETE",
+					headers: {"Content-Type": "application/json"}
+				})
+				const data = await response.json()
+			}, 
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
@@ -24,6 +101,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					fetch().then().then(data => setStore({ "foo": data.bar }))
 				*/
 			},
+			
+			
+			
+			
+			
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();

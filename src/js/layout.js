@@ -5,7 +5,10 @@ import ScrollToTop from "./component/scrollToTop";
 import { Home } from "./views/home";
 import { Demo } from "./views/demo";
 import { Single } from "./views/single";
+import CreateContact from "./views/create";
+import UpdateContact from "./views/update";
 import injectContext from "./store/appContext";
+import { ContactCard } from "./component/contactCard";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -22,9 +25,11 @@ const Layout = () => {
 				<ScrollToTop>
 					<Navbar />
 					<Routes>
-						<Route path="/" element={<Home />} />
+						<Route path="/" element={<ContactCard />} />
 						<Route path="/demo" element={<Demo />} />
 						<Route path="/single/:theid" element={<Single />} />
+						<Route path="/update-contact/" element={<UpdateContact/>}/>
+						<Route path="/add-contact" element={<CreateContact/>}/>
 						<Route path="*" element={<h1>Not found!</h1>} />
 					</Routes>
 					<Footer />
