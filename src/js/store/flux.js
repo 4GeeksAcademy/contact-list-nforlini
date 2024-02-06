@@ -16,12 +16,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			contact:[],
-			stage:{
-						full_name: "",
-						email: "",
-						address: "",
-						phone: "",
-					}
+			idStore:null,
 		},
 		actions: {
 			createContact: async (name,email,address,phone) => {
@@ -38,6 +33,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 				})
 				const data = await response.json()
+				getActions().getContact()
 				setStore((prevState) => {
 					const updatedContact = [
 						...prevState.contact,
@@ -85,6 +81,42 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				const data = await response.json()
 			},
+
+			selectContactID: (contact_id) => {
+				setStore({
+					idStore: contact_id,
+				})
+			},
+
+			updateContactAttribute: (contactId,attribute,value) =>{
+				const store = getStore()
+					const updatedContact = store.contact.map((contact)=>{
+						if (contact.id === contactId){
+							return{
+								...contact,
+								[attribute]: value,
+							}
+						}
+						return contact;
+					})
+				setStore (
+					{contact:updatedContact}
+					)
+					
+			},
+
+			updateFinal: () =>{
+				method:"PUT"
+				body: JSON.stringify(
+					{
+						full_name: value,
+						email: email,
+						agenda_slug: "Anxie-tea",
+						address: address,
+						phone: phone,
+					})
+			},
+
 			deleteContact: async (id) => {
 				const response = await fetch (`https://playground.4geeks.com/apis/fake/contact/${id}`, {
 					method: "DELETE",

@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 import "../../styles/demo.css";
+import { ContactCard } from "../component/ContactCard";
 
 export const Home = () => {
 		const {store, actions} = useContext(Context);
-		const [contact, setContact] = useState([]);
 
 		useEffect(()=>{
 			async function loadContact(){
@@ -18,10 +18,14 @@ export const Home = () => {
 		}, [])
 		return (
 			<div>
-				{contact?.map ((contact, index) => (
-					<contactCard key = {index+1} name={contact.name} email={contact.email} phone={contact.phone} address={contact.address} id={contact.id}/>
-				))}
-			</div>
+				{store.contact.map((contact) => {
+        		return(
+					<div>
+						<ContactCard key = {contact.id} name={contact.name} email={contact.email} phone={contact.phone} address={contact.address} id={contact.id}/>
+						
+					</div>
+					)})}
+			</div>	
 		)
 };
 
