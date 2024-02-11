@@ -18,7 +18,7 @@ export const ContactCard = () => {
                     {store.contact.map((e)=>{
                         return (
                         <div>
-                        <h5 className="card-title">{e.name}</h5>
+                        <h5 className="card-title">{e.full_name}</h5>
                         <p className="card-text">{e.email}</p>
                         <p className="card-text">{e.address}</p>
                         <p className="card-text">{e.phone}</p>
