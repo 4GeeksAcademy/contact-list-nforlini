@@ -6,10 +6,11 @@ import { Context } from "../store/appContext";
 export const ContactCard = (props) => {
     const { store, actions } = useContext(Context);
 
-    // async function handleDelete() {
-    //     await actions.deleteContact(props.id);
-    //     await window.location.reload(false);
-    // }
+    async function handleDelete() {
+        await actions.deleteContact(props.id);
+        await window.location.reload(false);
+    }
+
     return (
         <div className="container">
             <div className="card" style={{ width: "18rem" }}>
@@ -19,8 +20,9 @@ export const ContactCard = (props) => {
                     <p className="card-text">{props.address}</p>
                     <p className="card-text">{props.phone}</p>
                     <Link to={"/update/" + props.id}>
-                        Update
+                        <button className="btn btn-primary"> Update </button>
                     </Link>
+                    <button className="btn btn-danger" onClick={() => handleDelete()}>Delete</button>
                 </div>
             </div>
         </div >
