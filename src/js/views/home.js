@@ -11,7 +11,8 @@ export const Home = () => {
 
 	useEffect(() => {
 		async function loadContact() {
-			await actions.getContact()
+			await actions.getContacts()
+			// await window.location.reload(false);
 		}
 		loadContact()
 	}, [])
